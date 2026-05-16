@@ -214,52 +214,46 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
 
           <div
             onClick={() => setActiveTab('users')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-blue-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
               <FiUsers />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>System Users</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-[#00D2FF]' : 'text-blue-600'}`}>{users.length}</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>System Users</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-blue-600'}`}>{users.length}</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('reports')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-green-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-green-50 text-green-600 border border-green-100'}`}>
               <FiClock />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Hours Logged</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-[#00D2FF]' : 'text-green-600'}`}>{totalHoursCompany} hrs</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Hours Logged</div>
+              <div className={`text-2xl font-bold mt-2 whitespace-nowrap ${isDark ? 'text-[#00D2FF]' : 'text-green-600'}`}>{totalHoursCompany} hrs</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('tasks')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-amber-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-amber-50 text-amber-600 border border-amber-100'}`}>
               <FiCheckCircle />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Total Tasks</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-[#00D2FF]' : 'text-amber-600'}`}>{tasks.length}</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Total Tasks</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-amber-600'}`}>{tasks.length}</div>
             </div>
           </div>
         </div>
@@ -508,11 +502,11 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                         </div>
                       </div>
 
-                      <div className="text-right">
+                      <div className="sm:text-right sm:flex-shrink-0">
                         <span className={`text-xs font-bold block mb-1 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>
                           {new Date(rep.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </span>
-                        <span className={`px-2.5 py-0.5 border rounded-full text-xs font-bold shadow-xs ${
+                        <span className={`inline-flex items-center whitespace-nowrap px-3 py-1 border rounded-full text-xs font-bold shadow-xs ${
                           isDark ? 'bg-[#131C2E] text-[#00D2FF] border-[#00D2FF]/30' : 'bg-purple-100 text-purple-800 border-purple-200'
                         }`}>
                           {rep.hoursLogged} Hours Logged
@@ -527,12 +521,12 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-[#00D2FF] border-[#2B3C5F]' : 'bg-blue-50 text-blue-700 border-blue-200'
                       }`}>
-                        <FiClock /> In: {rep.inTime || '09:00 AM'}
+                        <FiClock /> In: {rep.inTime || '10:00 AM'}
                       </span>
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-[#00D2FF] border-[#2B3C5F]' : 'bg-indigo-50 text-indigo-700 border-indigo-200'
                       }`}>
-                        <FiClock /> Out: {rep.outTime || '06:00 PM'}
+                        <FiClock /> Out: {rep.outTime || '07:00 PM'}
                       </span>
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-emerald-400 border-[#2B3C5F]' : 'bg-emerald-50 text-emerald-700 border-emerald-200'

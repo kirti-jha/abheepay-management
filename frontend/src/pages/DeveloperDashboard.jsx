@@ -20,8 +20,8 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
     tasksInProgress: '',
     hurdlesFaced: '',
     dependencies: '',
-    inTime: '09:00 AM',
-    outTime: '06:00 PM',
+    inTime: '10:00 AM',
+    outTime: '07:00 PM',
     workLocation: 'Office'
   });
 
@@ -124,8 +124,8 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
         tasksInProgress: '',
         hurdlesFaced: '',
         dependencies: '',
-        inTime: '09:00 AM',
-        outTime: '06:00 PM',
+        inTime: '10:00 AM',
+        outTime: '07:00 PM',
         workLocation: 'Office'
       });
       fetchReports();
@@ -250,61 +250,61 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div
             onClick={() => setActiveTab('projects')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-blue-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
               <FiBriefcase />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Assigned Projects</div>
-              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{projects.length}</div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Assigned Projects</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{projects.length}</div>
             </div>
           </div>
 
           <div
             onClick={() => { setActiveTab('tasks'); setStatusFilter('All'); }}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-indigo-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-indigo-50 text-indigo-600 border border-indigo-100'}`}>
               <FiList />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Assigned Tasks</div>
-              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-[#00D2FF]' : 'text-indigo-600'}`}>{tasks.length}</div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Assigned Tasks</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-indigo-600'}`}>{tasks.length}</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('portfolio')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-yellow-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-yellow-50 text-yellow-600 border border-yellow-100'}`}>
               <FiCode />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Portfolio Projects</div>
-              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-[#00D2FF]' : 'text-yellow-600'}`}>{portfolios.length}</div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Portfolio Projects</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-yellow-600'}`}>{portfolios.length}</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('reports')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-purple-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-purple-50 text-purple-600 border border-purple-100'}`}>
               <FiTrendingUp />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Total Hours Logged</div>
-              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-[#00D2FF]' : 'text-purple-600'}`}>{totalHours} hrs</div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Total Hours Logged</div>
+              <div className={`text-2xl font-bold mt-2 whitespace-nowrap ${isDark ? 'text-[#00D2FF]' : 'text-purple-600'}`}>{totalHours} hrs</div>
             </div>
           </div>
         </div>
@@ -521,7 +521,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                     <input
                       type="text"
                       required
-                      placeholder="09:00 AM"
+                      placeholder="10:00 AM"
                       className={`w-full border rounded-xl py-2 px-3 text-xs font-medium focus:outline-none ${
                         isDark ? 'bg-[#0B101B] border-[#222F4A] text-white focus:ring-2 focus:ring-[#00D2FF]' : 'bg-white border-gray-300 focus:ring-2 focus:ring-indigo-500'
                       }`}
@@ -534,7 +534,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                     <input
                       type="text"
                       required
-                      placeholder="06:00 PM"
+                      placeholder="07:00 PM"
                       className={`w-full border rounded-xl py-2 px-3 text-xs font-medium focus:outline-none ${
                         isDark ? 'bg-[#0B101B] border-[#222F4A] text-white focus:ring-2 focus:ring-[#00D2FF]' : 'bg-white border-gray-300 focus:ring-2 focus:ring-indigo-500'
                       }`}
@@ -563,8 +563,8 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                   <textarea
                     required
                     placeholder="List completed tasks/PRs..."
-                    rows={2}
-                    className={`w-full border rounded-xl py-2 px-3 text-xs font-medium focus:outline-none ${
+                    rows={4}
+                    className={`w-full min-h-[120px] resize-y border rounded-xl py-3 px-4 text-sm font-medium leading-relaxed focus:outline-none ${
                       isDark ? 'bg-[#0B101B] border-[#222F4A] text-white focus:ring-2 focus:ring-[#00D2FF]' : 'border-gray-300 focus:ring-2 focus:ring-indigo-500'
                     }`}
                     value={reportForm.tasksCompleted}
@@ -577,8 +577,8 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                   <textarea
                     required
                     placeholder="Ongoing tasks..."
-                    rows={2}
-                    className={`w-full border rounded-xl py-2 px-3 text-xs font-medium focus:outline-none ${
+                    rows={4}
+                    className={`w-full min-h-[120px] resize-y border rounded-xl py-3 px-4 text-sm font-medium leading-relaxed focus:outline-none ${
                       isDark ? 'bg-[#0B101B] border-[#222F4A] text-white focus:ring-2 focus:ring-[#00D2FF]' : 'border-gray-300 focus:ring-2 focus:ring-indigo-500'
                     }`}
                     value={reportForm.tasksInProgress}
@@ -590,8 +590,8 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                   <label className={`block text-xs font-bold mb-1 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>Hurdles Faced (Optional)</label>
                   <textarea
                     placeholder="Any blockers or challenges..."
-                    rows={2}
-                    className={`w-full border rounded-xl py-2 px-3 text-xs font-medium focus:outline-none ${
+                    rows={4}
+                    className={`w-full min-h-[120px] resize-y border rounded-xl py-3 px-4 text-sm font-medium leading-relaxed focus:outline-none ${
                       isDark ? 'bg-[#0B101B] border-[#222F4A] text-white focus:ring-2 focus:ring-[#00D2FF]' : 'border-gray-300 focus:ring-2 focus:ring-indigo-500'
                     }`}
                     value={reportForm.hurdlesFaced}
@@ -603,8 +603,8 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                   <label className={`block text-xs font-bold mb-1 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>Dependencies (Optional)</label>
                   <textarea
                     placeholder="Waiting on API, design, etc..."
-                    rows={2}
-                    className={`w-full border rounded-xl py-2 px-3 text-xs font-medium focus:outline-none ${
+                    rows={4}
+                    className={`w-full min-h-[120px] resize-y border rounded-xl py-3 px-4 text-sm font-medium leading-relaxed focus:outline-none ${
                       isDark ? 'bg-[#0B101B] border-[#222F4A] text-white focus:ring-2 focus:ring-[#00D2FF]' : 'border-gray-300 focus:ring-2 focus:ring-indigo-500'
                     }`}
                     value={reportForm.dependencies}
@@ -642,7 +642,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                         <FiCalendar className={isDark ? 'text-[#00D2FF]' : 'text-indigo-600'} />
                         {new Date(rep.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
-                      <span className={`px-3 py-1 border rounded-full text-xs font-bold shadow-xs ${
+                      <span className={`inline-flex items-center whitespace-nowrap px-3 py-1 border rounded-full text-xs font-bold shadow-xs ${
                         isDark ? 'bg-[#131C2E] text-[#00D2FF] border-[#00D2FF]/30' : 'bg-indigo-100 text-indigo-800 border-indigo-200'
                       }`}>
                         {rep.hoursLogged} Hours Logged
@@ -655,12 +655,12 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-[#00D2FF] border-[#2B3C5F]' : 'bg-blue-50 text-blue-700 border-blue-200'
                       }`}>
-                        <FiClock /> In: {rep.inTime || '09:00 AM'}
+                        <FiClock /> In: {rep.inTime || '10:00 AM'}
                       </span>
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-[#00D2FF] border-[#2B3C5F]' : 'bg-purple-50 text-purple-700 border-purple-200'
                       }`}>
-                        <FiClock /> Out: {rep.outTime || '06:00 PM'}
+                        <FiClock /> Out: {rep.outTime || '07:00 PM'}
                       </span>
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-emerald-400 border-[#2B3C5F]' : 'bg-emerald-50 text-emerald-700 border-emerald-200'

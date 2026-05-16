@@ -707,11 +707,11 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                         </div>
                       </div>
 
-                      <div className="text-right">
+                      <div className="sm:text-right sm:flex-shrink-0">
                         <span className={`text-xs font-bold block mb-1 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>
                           {new Date(rep.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </span>
-                        <span className={`px-2.5 py-0.5 border rounded-full text-xs font-bold shadow-xs ${
+                        <span className={`inline-flex items-center whitespace-nowrap px-3 py-1 border rounded-full text-xs font-bold shadow-xs ${
                           isDark ? 'bg-[#131C2E] text-[#00D2FF] border-[#00D2FF]/30' : 'bg-purple-100 text-purple-800 border-purple-200'
                         }`}>
                           {rep.hoursLogged} Hours Logged
@@ -726,12 +726,12 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-[#00D2FF] border-[#2B3C5F]' : 'bg-blue-50 text-blue-700 border-blue-200'
                       }`}>
-                        <FiClock /> In: {rep.inTime || '09:00 AM'}
+                        <FiClock /> In: {rep.inTime || '10:00 AM'}
                       </span>
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-[#00D2FF] border-[#2B3C5F]' : 'bg-indigo-50 text-indigo-700 border-indigo-200'
                       }`}>
-                        <FiClock /> Out: {rep.outTime || '06:00 PM'}
+                        <FiClock /> Out: {rep.outTime || '07:00 PM'}
                       </span>
                       <span className={`flex items-center gap-1 px-2.5 py-1 border rounded-lg ${
                         isDark ? 'bg-[#1E2D4A] text-emerald-400 border-[#2B3C5F]' : 'bg-emerald-50 text-emerald-700 border-emerald-200'

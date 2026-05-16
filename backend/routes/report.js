@@ -34,8 +34,8 @@ router.post('/', async (req, res) => {
                 hurdlesFaced,
                 dependencies,
                 hoursLogged: parseFloat(hoursLogged || 0),
-                inTime: inTime || "09:00 AM",
-                outTime: outTime || "06:00 PM",
+                inTime: inTime || "10:00 AM",
+                outTime: outTime || "07:00 PM",
                 workLocation: workLocation || "Office"
             }
         });

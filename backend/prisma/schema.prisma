@@ -126,8 +126,8 @@ model DailyReport {
   hurdlesFaced    String?
   dependencies    String?
   hoursLogged     Float
-  inTime          String?  @default("09:00 AM")
-  outTime         String?  @default("06:00 PM")
+  inTime          String?  @default("10:00 AM")
+  outTime         String?  @default("07:00 PM")
   workLocation    String?  @default("Office") // 'Office', 'Work From Home', 'Client Site'
   date            DateTime @default(now())
   createdAt       DateTime @default(now())
