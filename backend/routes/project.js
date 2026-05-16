@@ -46,7 +46,7 @@ router.get('/:id', async (req, res) => {
 // Create a project
 router.post('/', async (req, res) => {
     try {
-        const { title, description, managerId, developerIds } = req.body;
+        const { title, description, managerId, developerIds, figmaLink, brdFileUrl } = req.body;
         const project = await prisma.project.create({
             data: {
                 title,
@@ -54,9 +54,11 @@ router.post('/', async (req, res) => {
                 managerId,
                 members: {
                     create: (developerIds || []).map(uid => ({ userId: uid }))
-                }
+                },
+                figmaLinks: figmaLink ? { create: { url: figmaLink } } : undefined,
+                brdFiles: brdFileUrl ? { create: { filename: 'BRD / Architecture Document', path: brdFileUrl } } : undefined
             },
-            include: { members: true }
+            include: { members: true, figmaLinks: true, brdFiles: true }
         });
         res.status(201).json(project);
     } catch (err) {

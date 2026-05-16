@@ -26,6 +26,8 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   const [projectForm, setProjectForm] = useState({
     title: '',
     description: '',
+    figmaLink: '',
+    brdFileUrl: '',
     developerIds: []
   });
 
@@ -93,7 +95,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
         managerId: user._id || user.id
       }, { withCredentials: true });
       alert('Project created successfully!');
-      setProjectForm({ title: '', description: '', developerIds: [] });
+      setProjectForm({ title: '', description: '', figmaLink: '', brdFileUrl: '', developerIds: [] });
       fetchProjects();
     } catch (err) {
       console.error(err);
@@ -386,6 +388,32 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                       }`}
                       value={projectForm.description}
                       onChange={e => setProjectForm({...projectForm, description: e.target.value})}
+                    />
+                  </div>
+
+                  <div>
+                    <label className={`block text-xs font-bold mb-1 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>Figma Design URL (Optional)</label>
+                    <input
+                      type="url"
+                      placeholder="https://figma.com/file/..."
+                      className={`block w-full border rounded-xl py-2.5 px-3.5 text-xs focus:outline-none ${
+                        isDark ? 'bg-[#0B101B] border-[#222F4A] text-white placeholder-slate-500 focus:ring-2 focus:ring-[#00D2FF]' : 'border-gray-300 focus:ring-2 focus:ring-blue-500'
+                      }`}
+                      value={projectForm.figmaLink}
+                      onChange={e => setProjectForm({...projectForm, figmaLink: e.target.value})}
+                    />
+                  </div>
+
+                  <div>
+                    <label className={`block text-xs font-bold mb-1 ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>BRD Document URL / Cloud Link (Optional)</label>
+                    <input
+                      type="url"
+                      placeholder="https://docs.google.com/document/d/..."
+                      className={`block w-full border rounded-xl py-2.5 px-3.5 text-xs focus:outline-none ${
+                        isDark ? 'bg-[#0B101B] border-[#222F4A] text-white placeholder-slate-500 focus:ring-2 focus:ring-[#00D2FF]' : 'border-gray-300 focus:ring-2 focus:ring-blue-500'
+                      }`}
+                      value={projectForm.brdFileUrl}
+                      onChange={e => setProjectForm({...projectForm, brdFileUrl: e.target.value})}
                     />
                   </div>
                 </div>

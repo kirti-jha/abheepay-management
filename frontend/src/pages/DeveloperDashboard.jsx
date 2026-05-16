@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { FiList, FiClock, FiCheckCircle, FiTrendingUp, FiSend, FiMapPin, FiCalendar, FiUser, FiCode, FiSettings, FiPlus, FiTrash2, FiExternalLink, FiGithub } from 'react-icons/fi';
+import { FiList, FiClock, FiCheckCircle, FiTrendingUp, FiSend, FiMapPin, FiCalendar, FiUser, FiCode, FiSettings, FiPlus, FiTrash2, FiExternalLink, FiGithub, FiBriefcase, FiFolder, FiLink, FiFileText } from 'react-icons/fi';
 import CredentialVault from '../components/CredentialVault';
 import SettingsPanel from '../components/SettingsPanel';
 
@@ -10,7 +10,8 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
   const [tasks, setTasks] = useState([]);
   const [reports, setReports] = useState([]);
   const [portfolios, setPortfolios] = useState([]);
-  const [activeTab, setActiveTab] = useState('tasks'); // 'tasks', 'reports', 'portfolio', 'settings'
+  const [projects, setProjects] = useState([]);
+  const [activeTab, setActiveTab] = useState('projects'); // 'projects', 'tasks', 'reports', 'portfolio', 'settings'
   const [statusFilter, setStatusFilter] = useState('All');
 
   // Report Form State
@@ -38,6 +39,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
     fetchTasks();
     fetchReports();
     fetchPortfolios();
+    fetchProjects();
   }, []);
 
   const fetchTasks = async () => {
@@ -45,6 +47,16 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
       const res = await axios.get('http://localhost:5000/api/tasks', { withCredentials: true });
       const myTasks = res.data.filter(t => t.assignedToId === (user._id || user.id));
       setTasks(myTasks);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/projects', { withCredentials: true });
+      const myProjects = res.data.filter(p => p.members?.some(m => m.userId === (user._id || user.id)));
+      setProjects(myProjects);
     } catch (err) {
       console.error(err);
     }
@@ -162,6 +174,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
   });
 
   const navItems = [
+    { id: 'projects', name: 'My Assigned Projects', icon: FiBriefcase },
     { id: 'tasks', name: 'My Task Board', icon: FiList },
     { id: 'reports', name: 'Attendance & Reports', icon: FiClock },
     { id: 'portfolio', name: 'My Past Projects', icon: FiCode },
@@ -236,32 +249,32 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
         {/* Stats Grid - ALL CARDS FULLY CLICKABLE & CONNECTED */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div
-            onClick={() => { setActiveTab('tasks'); setStatusFilter('All'); }}
+            onClick={() => setActiveTab('projects')}
             className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-blue-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
-              <FiList />
+              <FiBriefcase />
             </div>
             <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Total Assigned Tasks</div>
-              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{tasks.length}</div>
+              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Assigned Projects</div>
+              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{projects.length}</div>
             </div>
           </div>
 
           <div
-            onClick={() => { setActiveTab('tasks'); setStatusFilter('Done'); }}
+            onClick={() => { setActiveTab('tasks'); setStatusFilter('All'); }}
             className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
-              isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-green-500/20'
+              isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-indigo-500/20'
             }`}
           >
-            <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-green-50 text-green-600 border border-green-100'}`}>
-              <FiCheckCircle />
+            <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-indigo-50 text-indigo-600 border border-indigo-100'}`}>
+              <FiList />
             </div>
             <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Tasks Completed</div>
-              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-[#00D2FF]' : 'text-green-600'}`}>{completedTasksCount}</div>
+              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Assigned Tasks</div>
+              <div className={`text-2xl font-bold mt-1 ${isDark ? 'text-[#00D2FF]' : 'text-indigo-600'}`}>{tasks.length}</div>
             </div>
           </div>
 
@@ -295,6 +308,98 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
             </div>
           </div>
         </div>
+
+        {/* Tab 0: Assigned Projects */}
+        {activeTab === 'projects' && (
+          <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 ${
+            isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
+          }`}>
+            <div>
+              <h2 className={`text-xl font-bold flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <FiBriefcase className={isDark ? 'text-[#00D2FF]' : 'text-blue-600'} />
+                My Assigned Projects & Architecture Assets
+              </h2>
+              <p className={`text-sm mt-1 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>View the projects you are assigned to, along with Figma designs and BRD documents provided by your Manager.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {projects.map(project => (
+                <div key={project.id || project._id} className={`border rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-4 ${
+                  isDark ? 'bg-[#1A263E] border-[#2B3C5F]' : 'bg-white border-gray-200'
+                }`}>
+                  <div>
+                    <div className="flex justify-between items-start gap-2">
+                      <h3 className={`font-bold text-xl ${isDark ? 'text-white' : 'text-gray-900'}`}>{project.title}</h3>
+                      <span className={`px-2.5 py-1 rounded-xl text-xs font-bold border ${isDark ? 'bg-[#131C2E] text-[#00D2FF] border-[#222F4A]' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>
+                        Active Project
+                      </span>
+                    </div>
+                    <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-300' : 'text-gray-600'}`}>{project.description}</p>
+                    
+                    {project.manager && (
+                      <div className={`mt-4 p-3 rounded-xl flex items-center gap-3 border ${isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-gray-50 border-gray-100'}`}>
+                        <img src={project.manager.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${project.manager.name}`} className="w-8 h-8 rounded-full" alt="" />
+                        <div>
+                          <div className={`text-[10px] font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>Project Manager</div>
+                          <div className={`text-xs font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>{project.manager.name}</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className={`pt-4 border-t space-y-3 ${isDark ? 'border-[#2B3C5F]' : 'border-gray-100'}`}>
+                    <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Project Assets & Links</div>
+                    <div className="flex flex-wrap gap-2">
+                      {project.figmaLinks && project.figmaLinks.length > 0 ? (
+                        project.figmaLinks.map((link, idx) => (
+                          <a
+                            key={link.id || idx}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all shadow-xs ${
+                              isDark ? 'bg-[#131C2E] text-[#00D2FF] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100'
+                            }`}
+                          >
+                            <FiLink /> Figma Design {idx + 1}
+                          </a>
+                        ))
+                      ) : (
+                        <span className={`text-xs italic ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>No Figma links added</span>
+                      )}
+
+                      {project.brdFiles && project.brdFiles.length > 0 ? (
+                        project.brdFiles.map((file, idx) => (
+                          <a
+                            key={file.id || idx}
+                            href={file.path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all shadow-xs ${
+                              isDark ? 'bg-[#131C2E] text-emerald-400 border-[#222F4A] hover:border-emerald-50' : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                            }`}
+                          >
+                            <FiFileText /> {file.filename || `BRD Document ${idx + 1}`}
+                          </a>
+                        ))
+                      ) : (
+                        <span className={`text-xs italic ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>No BRD documents uploaded</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {projects.length === 0 && (
+                <div className={`col-span-2 text-center py-12 rounded-2xl border border-dashed ${
+                  isDark ? 'bg-[#1A263E] border-[#2B3C5F]' : 'bg-gray-50 border-gray-200'
+                }`}>
+                  <FiBriefcase className={`mx-auto text-4xl mb-2 ${isDark ? 'text-slate-600' : 'text-gray-400'}`} />
+                  <p className={`font-semibold text-base ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>You have not been assigned to any projects yet.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Tab 1: Task Board */}
         {activeTab === 'tasks' && (
