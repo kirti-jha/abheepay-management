@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
 const { PrismaClient } = require('@prisma/client');
 const { neonConfig } = require('@neondatabase/serverless');
 const { PrismaNeon } = require('@prisma/adapter-neon');
@@ -6,7 +7,7 @@ const ws = require('ws');
 
 neonConfig.webSocketConstructor = ws;
 
-let connectionString = process.env.DATABASE_URL;
+let connectionString = process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_OJ0vwIr5fxke@ep-nameless-dew-ap3ih32n-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require';
 if (!connectionString) {
   console.error("CRITICAL ERROR: DATABASE_URL is missing in process.env!");
 } else {
