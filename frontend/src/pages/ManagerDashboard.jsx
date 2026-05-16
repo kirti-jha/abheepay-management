@@ -262,89 +262,79 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
         </div>
 
         {/* Stats Grid - ALL CARDS FULLY CLICKABLE & CONNECTED */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
           <div
             onClick={() => setActiveTab('projects')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-blue-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
               <FiBriefcase />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Projects Managed</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{projects.length}</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Projects Managed</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{projects.length}</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('developers')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-purple-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-purple-50 text-purple-600 border border-purple-100'}`}>
               <FiUsers />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Developers</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-[#00D2FF]' : 'text-purple-600'}`}>{developers.length}</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Developers</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-purple-600'}`}>{developers.length}</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('tasks')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-indigo-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-indigo-50 text-indigo-600 border border-indigo-100'}`}>
               <FiCheckCircle />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Tasks Assigned</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-[#00D2FF]' : 'text-indigo-600'}`}>{tasks.length}</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Tasks Assigned</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-indigo-600'}`}>{tasks.length}</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('reports')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-green-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-green-50 text-green-600 border border-green-100'}`}>
               <FiClock />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Hours Logged</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-[#00D2FF]' : 'text-green-600'}`}>{totalHoursTeam} hrs</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Hours Logged</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-green-600'}`}>{totalHoursTeam} hrs</div>
             </div>
           </div>
 
           <div
             onClick={() => setActiveTab('reports')}
-            className={`p-6 rounded-2xl shadow-md border flex items-center space-x-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
+            className={`min-h-[160px] p-6 rounded-2xl shadow-md border flex flex-col items-start justify-center gap-4 hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 cursor-pointer ring-2 ring-transparent ${
               isDark ? 'bg-[#131C2E] border-[#222F4A] hover:border-[#00D2FF]' : 'bg-white border-gray-100 hover:ring-amber-500/20'
             }`}
           >
             <div className={`p-4 rounded-xl text-2xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-amber-50 text-amber-600 border border-amber-100'}`}>
               <FiCheckCircle />
             </div>
-            <div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Reports Submitted</div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-2xl font-bold ${isDark ? 'text-[#00D2FF]' : 'text-amber-600'}`}>{reports.length}</span>
-              </div>
+            <div className="min-w-0">
+              <div className={`text-sm font-semibold leading-snug ${isDark ? 'text-slate-400 uppercase text-xs tracking-wider' : 'text-gray-500'}`}>Reports Submitted</div>
+              <div className={`text-2xl font-bold mt-2 ${isDark ? 'text-[#00D2FF]' : 'text-amber-600'}`}>{reports.length}</div>
             </div>
           </div>
         </div>
