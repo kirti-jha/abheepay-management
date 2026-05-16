@@ -85,7 +85,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
 
   const themes = [
     { id: 'light', name: 'Light Mode', icon: FiSun, bg: 'bg-white text-gray-900 border-gray-200' },
-    { id: 'abheepaydark', name: 'AbheePay Dark', icon: FiMoon, bg: 'bg-[#0B132B] text-[#00D2FF] border-[#222F4A]' }
+    { id: 'abheepaydark', name: 'Abhee Management Dark', icon: FiMoon, bg: 'bg-[#0B132B] text-[#00D2FF] border-[#222F4A]' }
   ];
 
   const isDark = currentTheme === 'abheepaydark';

@@ -213,10 +213,10 @@ const Navbar = () => {
             }`}>
               <FiActivity />
             </div>
-            <Link to="/" className={`text-2xl font-extrabold tracking-tight hover:opacity-90 transition-opacity ${
+            <Link to="/" className={`text-2xl font-extrabold tracking-tight hover:opacity-90 transition-opacity font-['Outfit'] ${
               isDark ? 'text-[#00D2FF]' : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent'
             }`}>
-              DevTaskManager
+              Abhee <span className={isDark ? "text-white" : "text-gray-900"}>Management</span>
             </Link>
           </div>
 

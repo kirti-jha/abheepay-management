@@ -31,40 +31,61 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background glowing blobs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+    <div className="min-h-screen flex items-center justify-center bg-[#0B132B] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-['Inter']">
+      {/* Background Animated Gradient Blobs */}
+      <div className="absolute top-10 left-10 w-[500px] h-[500px] bg-gradient-to-tr from-[#00D2FF]/20 to-[#3a7BD5]/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-gradient-to-br from-[#7F00FF]/20 to-[#E100FF]/20 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
 
-      <div className="max-w-md w-full space-y-8 bg-white/90 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-white/20 relative z-10">
+      {/* Floating Decorative Badges */}
+      <div className="absolute top-1/4 left-16 hidden lg:flex items-center space-x-3 bg-white/10 backdrop-blur-2xl border border-white/10 py-3.5 px-6 rounded-3xl shadow-2xl animate-bounce duration-1000">
+        <div className="w-10 h-10 rounded-2xl bg-[#00D2FF]/20 flex items-center justify-center text-[#00D2FF] text-xl border border-[#00D2FF]/30">
+          <FiShield />
+        </div>
+        <div>
+          <p className="text-xs text-slate-400 font-medium">Enterprise Security</p>
+          <h4 className="text-sm font-bold text-white font-['Outfit']">256-bit WSS Encrypted</h4>
+        </div>
+      </div>
+
+      <div className="absolute bottom-1/4 right-16 hidden lg:flex items-center space-x-3 bg-white/10 backdrop-blur-2xl border border-white/10 py-3.5 px-6 rounded-3xl shadow-2xl animate-pulse">
+        <div className="w-10 h-10 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl border border-purple-500/30">
+          <FiBriefcase />
+        </div>
+        <div>
+          <p className="text-xs text-slate-400 font-medium">Hierarchy Management</p>
+          <h4 className="text-sm font-bold text-white font-['Outfit']">Admin • Manager • Developer</h4>
+        </div>
+      </div>
+
+      <div className="max-w-md w-full bg-[#131C2E]/80 backdrop-blur-3xl p-8 sm:p-10 rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#222F4A] relative z-10 space-y-8">
         <div className="flex flex-col items-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30 text-white font-bold text-3xl mb-4">
+          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-[#00D2FF] to-[#3a7BD5] flex items-center justify-center shadow-lg shadow-[#00D2FF]/20 text-slate-950 font-bold text-3xl mb-4 transform hover:scale-110 transition-transform duration-300">
             <FiActivity />
           </div>
-          <h2 className="text-center text-3xl font-extrabold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
-            DevTaskManager
+          <h2 className="text-center text-3xl sm:text-4xl font-extrabold text-white font-['Outfit'] tracking-tight">
+            Abhee <span className="bg-gradient-to-r from-[#00D2FF] to-[#3a7BD5] bg-clip-text text-transparent">Management</span>
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 font-medium max-w-xs">
-            Sign in with your company email and password to access your dashboard.
+          <p className="mt-2 text-center text-xs sm:text-sm text-slate-400 font-medium max-w-xs">
+            Sign in with your corporate credentials or explore via instant role-based demo.
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-5">
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs font-bold text-center">
+            <div className="p-3.5 bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl text-xs font-bold text-center backdrop-blur-sm animate-shake">
               {error}
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">Email Address</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Email Address</label>
             <div className="relative">
-              <FiMail className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-base" />
+              <FiMail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-base" />
               <input
                 type="email"
                 required
-                placeholder="developer@company.com"
-                className="w-full bg-white border border-gray-300 rounded-2xl pl-10 pr-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
+                placeholder="developer@abheemanagement.com"
+                className="w-full bg-[#0B101B] border border-[#222F4A] rounded-2xl pl-11 pr-4 py-3.5 text-sm font-medium text-white placeholder-slate-600 focus:outline-none focus:border-[#00D2FF] focus:ring-1 focus:ring-[#00D2FF] transition-all shadow-inner"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
@@ -72,14 +93,14 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1">Password</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Password</label>
             <div className="relative">
-              <FiLock className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-base" />
+              <FiLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-base" />
               <input
                 type="password"
                 required
                 placeholder="••••••••••••"
-                className="w-full bg-white border border-gray-300 rounded-2xl pl-10 pr-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs"
+                className="w-full bg-[#0B101B] border border-[#222F4A] rounded-2xl pl-11 pr-4 py-3.5 text-sm font-medium text-white placeholder-slate-600 focus:outline-none focus:border-[#00D2FF] focus:ring-1 focus:ring-[#00D2FF] transition-all shadow-inner"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
@@ -89,17 +110,17 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="group w-full flex items-center justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 disabled:opacity-50"
+            className="w-full flex items-center justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-slate-950 bg-gradient-to-r from-[#00D2FF] to-[#3a7BD5] hover:from-[#33d4ff] hover:to-[#5c92df] focus:outline-none shadow-lg shadow-[#00D2FF]/20 hover:shadow-[#00D2FF]/40 transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-50 font-['Outfit'] tracking-wide uppercase"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Authenticating...' : 'Sign In to Workspace'}
           </button>
 
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
+              <div className="w-full border-t border-[#222F4A]"></div>
             </div>
-            <div className="relative flex justify-center text-xs uppercase tracking-wider font-bold">
-              <span className="bg-white/80 px-4 text-gray-500 rounded-full py-1 border border-gray-200 backdrop-blur-xs">Or Instant Role-Based Demo</span>
+            <div className="relative flex justify-center text-[10px] uppercase tracking-widest font-bold">
+              <span className="bg-[#131C2E] px-4 text-slate-400 border border-[#222F4A] rounded-full py-1.5 shadow-md font-['Outfit']">Or Instant Role-Based Demo</span>
             </div>
           </div>
 
@@ -107,36 +128,36 @@ const Login = () => {
             <button
               type="button"
               onClick={() => handleDemoLogin('Admin')}
-              className="flex items-center justify-center gap-3 py-3.5 px-4 border border-purple-200 text-sm font-bold rounded-2xl text-purple-700 bg-purple-50/80 hover:bg-purple-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 shadow-xs hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
+              className="flex items-center justify-center gap-3 py-3.5 px-4 border border-purple-500/30 text-sm font-bold rounded-2xl text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 hover:border-purple-500/50 focus:outline-none shadow-xs hover:shadow-md hover:shadow-purple-500/10 transition-all duration-200 transform hover:-translate-y-0.5 font-['Outfit']"
             >
-              <FiShield className="text-purple-600 text-xl" />
+              <FiShield className="text-purple-400 text-xl" />
               Demo as Executive Admin
             </button>
 
             <button
               type="button"
               onClick={() => handleDemoLogin('Manager')}
-              className="flex items-center justify-center gap-3 py-3.5 px-4 border border-blue-200 text-sm font-bold rounded-2xl text-blue-700 bg-blue-50/80 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-xs hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
+              className="flex items-center justify-center gap-3 py-3.5 px-4 border border-blue-500/30 text-sm font-bold rounded-2xl text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 hover:border-blue-500/50 focus:outline-none shadow-xs hover:shadow-md hover:shadow-blue-500/10 transition-all duration-200 transform hover:-translate-y-0.5 font-['Outfit']"
             >
-              <FiBriefcase className="text-blue-600 text-xl" />
+              <FiBriefcase className="text-blue-400 text-xl" />
               Demo as Project Manager
             </button>
 
             <button
               type="button"
               onClick={() => handleDemoLogin('Developer')}
-              className="flex items-center justify-center gap-3 py-3.5 px-4 border border-indigo-200 text-sm font-bold rounded-2xl text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-xs hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
+              className="flex items-center justify-center gap-3 py-3.5 px-4 border border-emerald-500/30 text-sm font-bold rounded-2xl text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 hover:border-emerald-500/50 focus:outline-none shadow-xs hover:shadow-md hover:shadow-emerald-500/10 transition-all duration-200 transform hover:-translate-y-0.5 font-['Outfit']"
             >
-              <FiUser className="text-indigo-600 text-xl" />
+              <FiUser className="text-emerald-400 text-xl" />
               Demo as Lead Developer
             </button>
           </div>
 
-          <div className="pt-6 border-t border-gray-100/80 flex flex-col space-y-2 text-center text-xs text-gray-500 font-semibold">
-            <div className="flex items-center justify-center gap-1 text-green-600 font-bold">
-              <FiCheckCircle /> Secured with Neon Serverless & Prisma ORM
+          <div className="pt-6 border-t border-[#222F4A] flex flex-col space-y-2 text-center text-xs text-slate-500 font-medium">
+            <div className="flex items-center justify-center gap-1.5 text-[#00D2FF] font-bold font-['Outfit'] tracking-wide">
+              <FiCheckCircle className="text-base" /> Secured with Neon Serverless & Prisma ORM
             </div>
-            <div>Designed with Tailwind v4 & Glassmorphic Accents</div>
+            <div>Designed with Premium Glassmorphism • Abhee Management</div>
           </div>
         </form>
       </div>
