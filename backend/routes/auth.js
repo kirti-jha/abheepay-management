@@ -57,7 +57,8 @@ router.post('/create-developer', async (req, res) => {
 router.get('/logout', (req, res, next) => {
     req.logout((err) => {
         if (err) { return next(err); }
-        res.redirect('http://localhost:5173/');
+        const redirectUrl = process.env.VERCEL || process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:5173/';
+        res.redirect(redirectUrl);
     });
 });
 
@@ -86,7 +87,8 @@ router.get('/demo/:role', async (req, res, next) => {
 
         req.login(user, (err) => {
             if (err) return next(err);
-            res.redirect('http://localhost:5173/dashboard');
+            const redirectUrl = process.env.VERCEL || process.env.NODE_ENV === 'production' ? '/dashboard' : 'http://localhost:5173/dashboard';
+            res.redirect(redirectUrl);
         });
     } catch (err) {
         next(err);
