@@ -16,15 +16,15 @@
   "routes": [
     {
       "src": "/auth/(.*)",
-      "dest": "backend/server.js"
+      "dest": "/backend/server.js"
     },
     {
       "src": "/api/(.*)",
-      "dest": "backend/server.js"
+      "dest": "/backend/server.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "frontend/dist/$1"
+      "src": "/[^.]+",
+      "dest": "/index.html"
     }
   ]
 }
