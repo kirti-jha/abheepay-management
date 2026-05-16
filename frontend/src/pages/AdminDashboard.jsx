@@ -32,10 +32,11 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
     e.preventDefault();
     setLoadingUser(true);
     try {
-      await axios.post('/auth/create-developer', {
+      const res = await axios.post('/auth/create-developer', {
         ...userForm
       }, { withCredentials: true });
-      alert(`Successfully onboarded new ${userForm.role}! Login credentials have been dispatched.`);
+      const createdUser = res.data;
+      alert(`Successfully onboarded new ${userForm.role}.\n\nName: ${createdUser.name}\nEmail: ${createdUser.email}\nTemporary password: ${userForm.password}\n\nEmail sending is not configured yet, so share these credentials manually.`);
       setUserForm({ name: '', email: '', password: '', role: 'Admin' });
       fetchSystemData();
     } catch (err) {
@@ -671,7 +672,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                   Onboard System User
                 </h2>
                 <p className={`text-xs font-medium mt-1 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>
-                  Instantly provision Administrators, Managers, or Developers. Credentials will be securely dispatched to their email address.
+                  Instantly provision Administrators, Managers, or Developers, then share the generated credentials manually.
                 </p>
               </div>
 
@@ -740,7 +741,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                       onChange={e => setUserForm({...userForm, password: e.target.value})}
                     />
                   </div>
-                  <p className={`text-[11px] mt-1.5 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This password will be securely dispatched to the user.</p>
+                  <p className={`text-[11px] mt-1.5 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This temporary password is shown after creation. Email sending is not configured yet.</p>
                 </div>
 
                 <button
@@ -750,7 +751,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                     isDark ? 'bg-[#00D2FF] text-slate-950 hover:bg-[#33d4ff] shadow-cyan-500/20' : 'text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-purple-500/20'
                   }`}
                 >
-                  {loadingUser ? 'Provisioning User...' : 'Provision User & Dispatch Credentials'}
+                  {loadingUser ? 'Provisioning User...' : 'Provision User'}
                 </button>
               </form>
             </div>

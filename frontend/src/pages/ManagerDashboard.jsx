@@ -170,11 +170,12 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
     e.preventDefault();
     setLoadingDev(true);
     try {
-      await axios.post('/auth/create-developer', {
+      const res = await axios.post('/auth/create-developer', {
         ...devForm,
         role: 'Developer'
       }, { withCredentials: true });
-      alert('Developer added successfully! Login credentials (Email & Password) have been sent to their email.');
+      const createdUser = res.data;
+      alert(`Developer added successfully.\n\nName: ${createdUser.name}\nEmail: ${createdUser.email}\nTemporary password: ${devForm.password}\n\nEmail sending is not configured yet, so share these credentials manually.`);
       setDevForm({ name: '', email: '', password: '' });
       fetchDevelopers();
     } catch (err) {
@@ -781,7 +782,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                 <FiPlus className={isDark ? 'text-[#00D2FF]' : 'text-purple-600'} />
                 Onboard New Developer
               </h2>
-              <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>Add a developer to your team. They will receive their login email and password instantly.</p>
+              <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>Add a developer to your team and share the generated credentials manually.</p>
 
               <form onSubmit={handleAddDeveloper} className="space-y-4">
                 <div>
@@ -833,7 +834,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                       onChange={e => setDevForm({...devForm, password: e.target.value})}
                     />
                   </div>
-                  <p className={`text-[10px] mt-1 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This password will be emailed to the developer for their first login.</p>
+                  <p className={`text-[10px] mt-1 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This temporary password is shown after creation. Email sending is not configured yet.</p>
                 </div>
 
                 <button
@@ -843,7 +844,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                     isDark ? 'bg-[#00D2FF] text-slate-950 hover:bg-[#33d4ff] shadow-cyan-500/20' : 'text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-purple-500/20'
                   }`}
                 >
-                  {loadingDev ? 'Adding Developer...' : 'Add Developer & Send Credentials'}
+                  {loadingDev ? 'Adding Developer...' : 'Add Developer'}
                 </button>
               </form>
             </div>
