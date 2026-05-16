@@ -44,6 +44,27 @@ app.use('/api/reports', require('./routes/report'));
 app.use('/api/credentials', require('./routes/credential'));
 app.use('/api/portfolio', require('./routes/portfolio'));
 
+app.use((err, req, res, next) => {
+    console.error('Unhandled request error:', {
+        path: req.originalUrl,
+        method: req.method,
+        name: err?.name,
+        code: err?.code,
+        message: err?.message,
+        meta: err?.meta,
+        stack: err?.stack
+    });
+
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    res.status(500).json({
+        error: 'Internal Server Error',
+        code: err?.code || null
+    });
+});
+
 const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
