@@ -117,6 +117,73 @@ router.get('/users', async (req, res) => {
     }
 });
 
+router.delete('/users/:id', async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        if (!['Admin', 'Manager'].includes(req.user.role)) {
+            return res.status(403).json({ error: 'Forbidden' });
+        }
+
+        const { id } = req.params;
+        const requesterId = req.user.id || req.user._id;
+
+        if (id === requesterId) {
+            return res.status(400).json({ error: 'You cannot delete your own account.' });
+        }
+
+        const targetUser = await prisma.user.findUnique({
+            where: { id },
+            select: { id: true, name: true, role: true }
+        });
+
+        if (!targetUser) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        if (req.user.role === 'Manager' && targetUser.role !== 'Developer') {
+            return res.status(403).json({ error: 'Managers can only delete developer accounts.' });
+        }
+
+        const managedProjectCount = await prisma.project.count({
+            where: { managerId: id }
+        });
+
+        if (managedProjectCount > 0) {
+            return res.status(400).json({
+                error: 'This user still manages active projects. Reassign or remove those projects before deleting the account.'
+            });
+        }
+
+        await prisma.$transaction([
+            prisma.projectMember.deleteMany({ where: { userId: id } }),
+            prisma.dailyReport.deleteMany({ where: { developerId: id } }),
+            prisma.credential.deleteMany({ where: { userId: id } }),
+            prisma.passwordRequest.deleteMany({ where: { userId: id } }),
+            prisma.developerPortfolio.deleteMany({ where: { developerId: id } }),
+            prisma.task.updateMany({
+                where: { assignedToId: id },
+                data: { assignedToId: null }
+            }),
+            prisma.task.updateMany({
+                where: { createdById: id },
+                data: { createdById: null }
+            }),
+            prisma.user.delete({ where: { id } })
+        ]);
+
+        res.json({
+            success: true,
+            deletedUserId: id,
+            message: `${targetUser.name} was deleted successfully.`
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Request Password Change (User -> Admin/Manager)
 router.post('/password-request', async (req, res) => {
     try {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiShield, FiBriefcase, FiUsers, FiClock, FiPlus, FiFolder, FiMapPin, FiCheckCircle, FiActivity, FiSettings, FiCode, FiExternalLink, FiGithub, FiUser, FiMail, FiLock } from 'react-icons/fi';
+import { FiShield, FiBriefcase, FiUsers, FiClock, FiPlus, FiFolder, FiMapPin, FiCheckCircle, FiActivity, FiSettings, FiCode, FiExternalLink, FiGithub, FiUser, FiMail, FiLock, FiTrash2 } from 'react-icons/fi';
 import CredentialVault from '../components/CredentialVault';
 import SettingsPanel from '../components/SettingsPanel';
 
@@ -79,6 +79,26 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
     } catch (err) {
       console.error(err);
       alert('Error creating project');
+    }
+  };
+
+  const handleDeleteUser = async (targetUser) => {
+    const targetUserId = targetUser.id || targetUser._id;
+    const firstConfirm = window.confirm(`Delete ${targetUser.name} from the company user list?`);
+    if (!firstConfirm) return;
+
+    const secondConfirm = window.confirm(
+      `This permanently removes ${targetUser.name}, their reports, credentials, password requests, and portfolio data. Continue?`
+    );
+    if (!secondConfirm) return;
+
+    try {
+      const res = await axios.delete(`/auth/users/${targetUserId}`, { withCredentials: true });
+      alert(res.data?.message || 'User deleted successfully.');
+      fetchSystemData();
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.error || 'Error deleting user');
     }
   };
 
@@ -586,23 +606,37 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                   <div key={u.id || u._id} className={`border rounded-2xl p-6 flex flex-col justify-between transition-all ${
                     isDark ? 'bg-[#1A263E] border-[#2B3C5F] hover:bg-[#1E2D4A]' : 'bg-gray-50/60 border-gray-100 hover:bg-white hover:shadow-md'
                   }`}>
-                    <div className="flex items-center space-x-4 mb-4">
-                      <img
-                        className="h-14 w-14 rounded-full border-2 border-white shadow-md"
-                        src={u.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.name}`}
-                        alt={u.name}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <h3 className={`font-bold text-base truncate ${isDark ? 'text-white' : 'text-gray-900'}`}>{u.name}</h3>
-                        <p className={`text-xs font-medium mb-2 truncate ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>{u.email}</p>
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
-                          isDark 
-                            ? 'bg-[#131C2E] text-[#00D2FF] border-[#00D2FF]/30'
-                            : (u.role === 'Admin' ? 'bg-purple-100 text-purple-800 border-purple-200' : u.role === 'Manager' ? 'bg-blue-100 text-blue-800 border-blue-200' : 'bg-indigo-100 text-indigo-800 border-indigo-200')
-                        }`}>
-                          {u.role}
-                        </span>
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div className="flex items-center space-x-4 min-w-0 flex-1">
+                        <img
+                          className="h-14 w-14 rounded-full border-2 border-white shadow-md"
+                          src={u.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.name}`}
+                          alt={u.name}
+                        />
+                        <div className="min-w-0 flex-1">
+                          <h3 className={`font-bold text-base truncate ${isDark ? 'text-white' : 'text-gray-900'}`}>{u.name}</h3>
+                          <p className={`text-xs font-medium mb-2 truncate ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>{u.email}</p>
+                          <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+                            isDark 
+                              ? 'bg-[#131C2E] text-[#00D2FF] border-[#00D2FF]/30'
+                              : (u.role === 'Admin' ? 'bg-purple-100 text-purple-800 border-purple-200' : u.role === 'Manager' ? 'bg-blue-100 text-blue-800 border-blue-200' : 'bg-indigo-100 text-indigo-800 border-indigo-200')
+                          }`}>
+                            {u.role}
+                          </span>
+                        </div>
                       </div>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteUser(u)}
+                        className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-colors ${
+                          isDark
+                            ? 'border-red-500/30 bg-red-500/10 text-red-200 hover:bg-red-500/20'
+                            : 'border-red-200 bg-red-50 text-red-600 hover:bg-red-100'
+                        }`}
+                      >
+                        <FiTrash2 />
+                        Delete
+                      </button>
                     </div>
 
                     {/* User Portfolio Section (For Developers) */}
