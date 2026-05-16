@@ -5,6 +5,7 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const prisma = require('./config/db');
+const upload = require('./middleware/upload');
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(upload.uploadDir));
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'secret',
