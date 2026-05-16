@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
-const path = require('path');
 const prisma = require('./config/db');
 
 const app = express();
