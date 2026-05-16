@@ -1,0 +1,45 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
+const path = require('path');
+const prisma = require('./config/db');
+
+const app = express();
+
+// Middleware
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'secret',
+    resave: false,
+    saveUninitialized: true,
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport');
+
+// Test DB connection
+prisma.$connect()
+    .then(() => console.log('Connected to Neon PostgreSQL via Prisma'))
+    .catch(err => console.error('DB connection error:', err));
+
+// Routes
+app.use('/auth', require('./routes/auth'));
+app.use('/api/projects', require('./routes/project'));
+app.use('/api/tasks', require('./routes/task'));
+app.use('/api/reports', require('./routes/report'));
+app.use('/api/credentials', require('./routes/credential'));
+app.use('/api/portfolio', require('./routes/portfolio'));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,0 +1,173 @@
+// This is your Prisma schema file
+// Learn more at: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id         String   @id @default(cuid())
+  googleId   String?  @unique
+  name       String
+  email      String   @unique
+  password   String?
+  avatar     String?
+  role       Role     @default(Developer)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  managedProjects  Project[]     @relation("ProjectManager")
+  projectMembers   ProjectMember[]
+  assignedTasks    Task[]        @relation("TaskAssignee")
+  createdTasks     Task[]        @relation("TaskCreator")
+  dailyReports     DailyReport[]
+  credentials      Credential[]
+  passwordRequests PasswordRequest[]
+  developerPortfolios DeveloperPortfolio[] @relation("DeveloperPortfolios")
+}
+
+enum Role {
+  Admin
+  Manager
+  Developer
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  managerId   String
+  manager     User     @relation("ProjectManager", fields: [managerId], references: [id])
+
+  members     ProjectMember[]
+  tasks       Task[]
+  brdFiles    BrdFile[]
+  figmaLinks  FigmaLink[]
+  figmaImages FigmaImage[]
+}
+
+model ProjectMember {
+  id        String  @id @default(cuid())
+  projectId String
+  userId    String
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+}
+
+model BrdFile {
+  id        String  @id @default(cuid())
+  filename  String
+  path      String
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model FigmaLink {
+  id        String  @id @default(cuid())
+  url       String
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model FigmaImage {
+  id        String  @id @default(cuid())
+  filename  String
+  path      String
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus @default(Todo)
+  priority    Priority   @default(Medium)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  assignedToId String?
+  assignedTo   User?      @relation("TaskAssignee", fields: [assignedToId], references: [id])
+
+  createdById  String?
+  createdBy    User?      @relation("TaskCreator", fields: [createdById], references: [id])
+}
+
+enum TaskStatus {
+  Todo
+  InProgress
+  Done
+}
+
+enum Priority {
+  Low
+  Medium
+  High
+}
+
+model DailyReport {
+  id              String   @id @default(cuid())
+  tasksCompleted  String?
+  tasksInProgress String?
+  hurdlesFaced    String?
+  dependencies    String?
+  hoursLogged     Float
+  inTime          String?  @default("09:00 AM")
+  outTime         String?  @default("06:00 PM")
+  workLocation    String?  @default("Office") // 'Office', 'Work From Home', 'Client Site'
+  date            DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  developerId String
+  developer   User   @relation(fields: [developerId], references: [id], onDelete: Cascade)
+}
+
+model Credential {
+  id        String   @id @default(cuid())
+  siteName  String
+  url       String?
+  username  String
+  password  String
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PasswordRequest {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String   @default("Pending") // Pending, Approved, Rejected
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
+model DeveloperPortfolio {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  techStack   String?
+  liveUrl     String?
+  githubUrl   String?
+  createdAt   DateTime @default(now())
+
+  developerId String
+  developer   User     @relation("DeveloperPortfolios", fields: [developerId], references: [id], onDelete: Cascade)
+}
+
