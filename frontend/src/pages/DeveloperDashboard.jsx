@@ -36,13 +36,15 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
   const [loadingPortfolio, setLoadingPortfolio] = useState(false);
 
   useEffect(() => {
+    if (!user) return;
     fetchTasks();
     fetchReports();
     fetchPortfolios();
     fetchProjects();
-  }, []);
+  }, [user]);
 
   const fetchTasks = async () => {
+    if (!user) return;
     try {
       const res = await axios.get('/api/tasks', { withCredentials: true });
       const myTasks = res.data.filter(t => t.assignedToId === (user._id || user.id));
@@ -53,6 +55,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
   };
 
   const fetchProjects = async () => {
+    if (!user) return;
     try {
       const res = await axios.get('/api/projects', { withCredentials: true });
       const myProjects = res.data.filter(p => p.members?.some(m => m.userId === (user._id || user.id)));
@@ -63,6 +66,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
   };
 
   const fetchReports = async () => {
+    if (!user) return;
     try {
       const res = await axios.get('/api/reports', { withCredentials: true });
       const myReports = res.data.filter(r => r.developerId === (user._id || user.id));
@@ -73,6 +77,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
   };
 
   const fetchPortfolios = async () => {
+    if (!user) return;
     try {
       const res = await axios.get(`/api/portfolio?developerId=${user._id || user.id}`, { withCredentials: true });
       setPortfolios(res.data);

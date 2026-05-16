@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { FiBriefcase, FiUsers, FiClock, FiCheckCircle, FiPlus, FiUploadCloud, FiLink, FiFolder, FiMapPin, FiUser, FiMail, FiLock, FiSettings, FiCode, FiExternalLink, FiGithub, FiTrash2 } from 'react-icons/fi';
 import CredentialVault from '../components/CredentialVault';
 import SettingsPanel from '../components/SettingsPanel';
+import UserProfileModal from '../components/UserProfileModal';
 
 const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   const { user } = useSelector((state) => state.auth);
@@ -13,6 +14,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   const [tasks, setTasks] = useState([]);
   const [portfolios, setPortfolios] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedDeveloper, setSelectedDeveloper] = useState(null);
 
   const [taskForm, setTaskForm] = useState({ title: '', description: '', assignedToId: '', priority: 'Medium' });
   const [figmaLink, setFigmaLink] = useState('');
@@ -32,14 +34,19 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   });
 
   useEffect(() => {
-    fetchProjects();
     fetchReports();
     fetchDevelopers();
-    fetchTasks();
     fetchPortfolios();
   }, []);
 
+  useEffect(() => {
+    if (!user) return;
+    fetchProjects();
+    fetchTasks();
+  }, [user]);
+
   const fetchProjects = async () => {
+    if (!user) return;
     try {
       const res = await axios.get('/api/projects', { withCredentials: true });
       const myProjects = res.data.filter(p => p.managerId === (user._id || user.id));
@@ -69,6 +76,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   };
 
   const fetchTasks = async () => {
+    if (!user) return;
     try {
       const res = await axios.get('/api/tasks', { withCredentials: true });
       const myTasks = res.data.filter(t => t.createdById === (user._id || user.id));
@@ -879,7 +887,10 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                 {developers.map(dev => {
                   const devPortfolios = portfolios.filter(p => p.developerId === (dev.id || dev._id));
                   return (
-                    <div key={dev.id || dev._id} className={`border rounded-2xl p-6 flex flex-col justify-between transition-all ${
+                    <div
+                      key={dev.id || dev._id}
+                      onClick={() => setSelectedDeveloper(dev)}
+                      className={`border rounded-2xl p-6 flex flex-col justify-between transition-all cursor-pointer ${
                       isDark ? 'bg-[#1A263E] border-[#2B3C5F] hover:bg-[#1E2D4A]' : 'bg-gray-50/60 border-gray-100 hover:bg-white hover:shadow-md'
                     }`}>
                       <div className="flex items-start justify-between gap-4 mb-4">
@@ -901,7 +912,10 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                         </div>
                         <button
                           type="button"
-                          onClick={() => handleDeleteDeveloper(dev)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteDeveloper(dev);
+                          }}
                           className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-colors ${
                             isDark
                               ? 'border-red-500/30 bg-red-500/10 text-red-200 hover:bg-red-500/20'
@@ -930,12 +944,12 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                                   <h5 className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.title}</h5>
                                   <div className="flex items-center gap-2 text-[10px]">
                                     {item.liveUrl && (
-                                      <a href={item.liveUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-[#00D2FF]' : 'text-blue-600'}`}>
+                                      <a onClick={(e) => e.stopPropagation()} href={item.liveUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-[#00D2FF]' : 'text-blue-600'}`}>
                                         <FiExternalLink /> Live
                                       </a>
                                     )}
                                     {item.githubUrl && (
-                                      <a href={item.githubUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-slate-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+                                      <a onClick={(e) => e.stopPropagation()} href={item.githubUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-slate-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                                         <FiGithub /> Repo
                                       </a>
                                     )}
@@ -976,6 +990,19 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
               </div>
             </div>
           </div>
+        )}
+
+        {selectedDeveloper && (
+          <UserProfileModal
+            user={selectedDeveloper}
+            reports={reports}
+            portfolios={portfolios}
+            projects={projects}
+            tasks={tasks}
+            isDark={isDark}
+            onClose={() => setSelectedDeveloper(null)}
+            scopeLabel="Developer Detail View"
+          />
         )}
 
         {/* Tab 4: Tasks Assigned Overview */}

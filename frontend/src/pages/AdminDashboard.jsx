@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FiShield, FiBriefcase, FiUsers, FiClock, FiPlus, FiFolder, FiMapPin, FiCheckCircle, FiActivity, FiSettings, FiCode, FiExternalLink, FiGithub, FiUser, FiMail, FiLock, FiTrash2 } from 'react-icons/fi';
 import CredentialVault from '../components/CredentialVault';
 import SettingsPanel from '../components/SettingsPanel';
+import UserProfileModal from '../components/UserProfileModal';
 
 const AdminDashboard = ({ currentTheme, onThemeChange }) => {
   const [projects, setProjects] = useState([]);
@@ -11,6 +12,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
   const [tasks, setTasks] = useState([]);
   const [portfolios, setPortfolios] = useState([]);
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'projects', 'reports', 'users', 'tasks', 'settings'
+  const [selectedUser, setSelectedUser] = useState(null);
 
   // New Project Form State
   const [projectForm, setProjectForm] = useState({
@@ -597,7 +599,10 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
               {users.map(u => {
                 const userPortfolios = portfolios.filter(p => p.developerId === (u.id || u._id));
                 return (
-                  <div key={u.id || u._id} className={`border rounded-2xl p-6 flex flex-col justify-between transition-all ${
+                  <div
+                    key={u.id || u._id}
+                    onClick={() => setSelectedUser(u)}
+                    className={`border rounded-2xl p-6 flex flex-col justify-between transition-all cursor-pointer ${
                     isDark ? 'bg-[#1A263E] border-[#2B3C5F] hover:bg-[#1E2D4A]' : 'bg-gray-50/60 border-gray-100 hover:bg-white hover:shadow-md'
                   }`}>
                     <div className="flex items-start justify-between gap-4 mb-4">
@@ -621,7 +626,10 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                       </div>
                       <button
                         type="button"
-                        onClick={() => handleDeleteUser(u)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteUser(u);
+                        }}
                         className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-colors ${
                           isDark
                             ? 'border-red-500/30 bg-red-500/10 text-red-200 hover:bg-red-500/20'
@@ -651,12 +659,12 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                                   <h5 className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.title}</h5>
                                   <div className="flex items-center gap-2 text-[10px]">
                                     {item.liveUrl && (
-                                      <a href={item.liveUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-[#00D2FF]' : 'text-blue-600'}`}>
+                                      <a onClick={(e) => e.stopPropagation()} href={item.liveUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-[#00D2FF]' : 'text-blue-600'}`}>
                                         <FiExternalLink /> Live
                                       </a>
                                     )}
                                     {item.githubUrl && (
-                                      <a href={item.githubUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-slate-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
+                                      <a onClick={(e) => e.stopPropagation()} href={item.githubUrl} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-0.5 hover:underline ${isDark ? 'text-slate-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}>
                                         <FiGithub /> Repo
                                       </a>
                                     )}
@@ -689,6 +697,19 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
               })}
             </div>
           </div>
+        )}
+
+        {selectedUser && (
+          <UserProfileModal
+            user={selectedUser}
+            reports={reports}
+            portfolios={portfolios}
+            projects={projects}
+            tasks={tasks}
+            isDark={isDark}
+            onClose={() => setSelectedUser(null)}
+            scopeLabel="Company User Profile"
+          />
         )}
 
         {/* Tab 4.5: Onboard System User Form */}
