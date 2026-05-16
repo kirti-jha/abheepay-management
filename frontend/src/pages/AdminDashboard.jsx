@@ -63,7 +63,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
       ]);
       setProjects(projRes.data);
       setReports(repRes.data);
-      setUsers(userRes.data);
+      setUsers(userRes.data.filter(user => user.role !== 'Admin'));
       setTasks(taskRes.data);
       setPortfolios(portRes.data);
     } catch (err) {

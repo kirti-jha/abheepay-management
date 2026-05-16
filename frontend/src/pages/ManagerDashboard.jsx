@@ -68,7 +68,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   const fetchDevelopers = async () => {
     try {
       const res = await axios.get('/auth/users', { withCredentials: true });
-      const devs = res.data.filter(u => u.role === 'Developer');
+      const devs = res.data.filter(u => u.role === 'Developer' && u.role !== 'Admin');
       setDevelopers(devs);
     } catch (err) {
       console.error(err);
