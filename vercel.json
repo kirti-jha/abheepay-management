@@ -27,6 +27,9 @@
   ],
   "routes": [
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/auth/(.*)",
       "dest": "/backend/server.js"
     },
@@ -35,7 +38,7 @@
       "dest": "/backend/server.js"
     },
     {
-      "src": "/[^.]+",
+      "src": "/(.*)",
       "dest": "/index.html"
     }
   ]
