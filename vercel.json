@@ -5,7 +5,12 @@
       "src": "backend/server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": "backend/.env"
+        "includeFiles": [
+          "backend/.env",
+          "backend/node_modules/.prisma/client/**",
+          "backend/node_modules/@prisma/client/**",
+          "backend/prisma/**"
+        ]
       }
     },
     {
