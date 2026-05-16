@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 const { PrismaClient } = require('@prisma/client');
-const { neonConfig } = require('@neondatabase/serverless');
+const { Pool, neonConfig } = require('@neondatabase/serverless');
 const { PrismaNeon } = require('@prisma/adapter-neon');
 const ws = require('ws');
 
@@ -18,8 +18,8 @@ if (!connectionString) {
 neonConfig.connectionString = connectionString;
 process.env.DATABASE_URL = connectionString;
 
-// Pass { connectionString } directly to PrismaNeon in Prisma v7.8.0!
-const adapter = new PrismaNeon({ connectionString });
+const pool = new Pool({ connectionString });
+const adapter = new PrismaNeon(pool);
 const prisma = new PrismaClient({ adapter });
 
 module.exports = prisma;
