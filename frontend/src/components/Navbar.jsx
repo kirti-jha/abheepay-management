@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { FiShield, FiBriefcase, FiUser, FiLogOut, FiActivity, FiBell, FiCheck, FiInfo, FiClock, FiCheckCircle } from 'react-icons/fi';
+import { FiShield, FiBriefcase, FiUser, FiLogOut, FiActivity, FiBell, FiCheck, FiInfo, FiClock, FiCheckCircle, FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   // Listen for theme changes
   useEffect(() => {
@@ -206,14 +207,14 @@ const Navbar = () => {
       isDark ? 'bg-[#0B132B]/80 border-[#222F4A]' : 'bg-white/80 border-gray-100'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          <div className="flex items-center space-x-3">
+        <div className="flex min-h-16 items-center justify-between gap-3 py-3">
+          <div className="flex min-w-0 items-center space-x-3">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-md text-white font-bold text-xl ${
               isDark ? 'bg-[#1E2D4A] text-[#00D2FF] border border-[#2B3C5F]' : 'bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-blue-500/30'
             }`}>
               <FiActivity />
             </div>
-            <Link to="/" className={`text-2xl font-extrabold tracking-tight hover:opacity-90 transition-opacity font-['Outfit'] ${
+            <Link to="/" className={`truncate text-lg sm:text-2xl font-extrabold tracking-tight hover:opacity-90 transition-opacity font-['Outfit'] ${
               isDark ? 'text-[#00D2FF]' : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent'
             }`}>
               Abhee <span className={isDark ? "text-white" : "text-gray-900"}>Management</span>
@@ -221,7 +222,7 @@ const Navbar = () => {
           </div>
 
           {user && (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               {/* Notification Bell */}
               <div className="relative">
                 <button
@@ -243,7 +244,7 @@ const Navbar = () => {
 
                 {/* Dropdown Popover */}
                 {showNotifications && (
-                  <div className={`absolute right-0 mt-3 w-80 sm:w-96 rounded-3xl shadow-2xl border overflow-hidden transition-all z-50 ${
+                  <div className={`fixed inset-x-4 top-20 sm:absolute sm:inset-auto sm:right-0 sm:top-auto sm:mt-3 w-auto sm:w-96 rounded-3xl shadow-2xl border overflow-hidden transition-all z-50 ${
                     isDark ? 'bg-[#131C2E] border-[#2B3C5F]' : 'bg-white border-gray-100'
                   }`}>
                     <div className={`p-4 border-b flex justify-between items-center ${isDark ? 'border-[#2B3C5F] bg-[#1A263E]' : 'border-gray-100 bg-gray-50/80'}`}>
@@ -320,7 +321,7 @@ const Navbar = () => {
               </div>
 
               {/* User Profile Pill */}
-              <div className={`flex items-center space-x-3 px-4 py-1.5 rounded-full border shadow-inner transition-all ${
+              <div className={`hidden lg:flex items-center space-x-3 px-4 py-1.5 rounded-full border shadow-inner transition-all ${
                 isDark ? 'bg-[#131C2E] border-[#2B3C5F]' : 'bg-gray-50/80 border-gray-100'
               }`}>
                 <img
@@ -340,7 +341,7 @@ const Navbar = () => {
 
               <a
                 href={import.meta.env.DEV ? 'http://localhost:5000/auth/logout' : '/auth/logout'}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 shadow-xs hover:shadow-sm ${
+                className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 shadow-xs hover:shadow-sm ${
                   isDark 
                     ? 'text-red-400 bg-red-950/40 hover:bg-red-950/70 border border-red-900/50 hover:border-red-800' 
                     : 'text-red-600 bg-red-50 hover:bg-red-100 border border-red-100 hover:border-red-200'
@@ -349,9 +350,63 @@ const Navbar = () => {
                 <FiLogOut />
                 Logout
               </a>
+
+              <button
+                type="button"
+                onClick={() => setShowMobileMenu((prev) => !prev)}
+                className={`sm:hidden p-2.5 rounded-xl border transition-colors ${
+                  isDark
+                    ? 'bg-[#131C2E] border-[#2B3C5F] text-[#00D2FF]'
+                    : 'bg-gray-50 border-gray-200 text-gray-700'
+                }`}
+                aria-label="Toggle mobile menu"
+              >
+                {showMobileMenu ? <FiX className="text-lg" /> : <FiMenu className="text-lg" />}
+              </button>
             </div>
           )}
         </div>
+
+        {user && showMobileMenu && (
+          <div className={`sm:hidden pb-4 ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}>
+            <div className={`rounded-3xl border p-4 space-y-4 ${
+              isDark ? 'bg-[#131C2E] border-[#2B3C5F]' : 'bg-white border-gray-100'
+            }`}>
+              <div className="flex items-center gap-3">
+                <img
+                  className="h-12 w-12 rounded-full border border-white shadow-sm"
+                  src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`}
+                  alt={user.name}
+                />
+                <div className="min-w-0">
+                  <div className={`truncate text-sm font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>{user.name}</div>
+                  <div className={`truncate text-xs ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>{user.email}</div>
+                </div>
+              </div>
+
+              <div>
+                <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border ${getRoleBadge(user.role)}`}>
+                  {getRoleIcon(user.role)}
+                  {user.role}
+                </span>
+              </div>
+
+              <a
+                href={import.meta.env.DEV ? 'http://localhost:5000/auth/logout' : '/auth/logout'}
+                className={`flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 ${
+                  isDark
+                    ? 'text-red-400 bg-red-950/40 border border-red-900/50'
+                    : 'text-red-600 bg-red-50 border border-red-100'
+                }`}
+              >
+                <FiLogOut />
+                Logout
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

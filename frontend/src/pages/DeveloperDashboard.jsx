@@ -200,7 +200,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
             </div>
           </div>
 
-          <nav className="space-y-2">
+          <nav className="flex gap-2 overflow-x-auto pb-1 lg:block lg:space-y-2 lg:overflow-visible lg:pb-0">
             {navItems.map(item => {
               const Icon = item.icon;
               const active = activeTab === item.id;
@@ -208,7 +208,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all ${
+                  className={`min-w-[220px] lg:w-full flex items-center space-x-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all ${
                     active 
                       ? (isDark ? 'bg-[#1E293B] border-l-4 border-[#00D2FF] text-[#00D2FF] shadow-lg shadow-cyan-500/10 transform -translate-y-0.5' : 'bg-indigo-600 text-white shadow-md shadow-indigo-500/20 transform -translate-y-0.5') 
                       : (isDark ? 'text-slate-400 hover:bg-[#1A263E] hover:text-slate-200' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900')
@@ -226,7 +226,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
       {/* Main Content Area */}
       <div className="flex-1 space-y-8 min-w-0">
         {/* Header Banner */}
-        <div className={`rounded-3xl p-8 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 backdrop-blur-lg transition-all ${
+        <div className={`rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 backdrop-blur-lg transition-all ${
           isDark ? 'bg-[#00D2FF] text-slate-950 shadow-cyan-500/10' : 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-purple-500/20'
         }`}>
           <div>
@@ -235,7 +235,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
               View your active task board, submit your daily attendance & progress reports, and showcase your past project portfolio.
             </p>
           </div>
-          <div className={`flex items-center gap-4 px-6 py-4 rounded-2xl border shadow-inner ${
+          <div className={`w-full md:w-auto flex items-center gap-4 px-6 py-4 rounded-2xl border shadow-inner ${
             isDark ? 'bg-slate-950/20 border-slate-950/20 text-slate-950' : 'bg-white/10 backdrop-blur-md border-white/20 text-white'
           }`}>
             <FiCalendar className={`text-3xl ${isDark ? 'text-slate-950' : 'text-indigo-200'}`} />

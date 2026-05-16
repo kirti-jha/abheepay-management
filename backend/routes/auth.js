@@ -1,10 +1,10 @@
 const express = require('express');
-const passport = require('passport');
 const prisma = require('../config/db');
+const { clearAuthCookie, setAuthCookie } = require('../config/auth');
 const router = express.Router();
 
 // Email & Password Login Route
-router.post('/login', async (req, res, next) => {
+router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -16,10 +16,8 @@ router.post('/login', async (req, res, next) => {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
-        req.login(user, (err) => {
-            if (err) return next(err);
-            res.json(user);
-        });
+        setAuthCookie(res, user);
+        res.json(user);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -54,12 +52,10 @@ router.post('/create-developer', async (req, res) => {
     }
 });
 
-router.get('/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) { return next(err); }
-        const redirectUrl = process.env.VERCEL || process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:5173/';
-        res.redirect(redirectUrl);
-    });
+router.get('/logout', (req, res) => {
+    clearAuthCookie(res);
+    const redirectUrl = process.env.VERCEL || process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:5173/';
+    res.redirect(redirectUrl);
 });
 
 router.get('/current_user', (req, res) => {
@@ -85,11 +81,9 @@ router.get('/demo/:role', async (req, res, next) => {
             });
         }
 
-        req.login(user, (err) => {
-            if (err) return next(err);
-            const redirectUrl = process.env.VERCEL || process.env.NODE_ENV === 'production' ? '/dashboard' : 'http://localhost:5173/dashboard';
-            res.redirect(redirectUrl);
-        });
+        setAuthCookie(res, user);
+        const redirectUrl = process.env.VERCEL || process.env.NODE_ENV === 'production' ? '/dashboard' : 'http://localhost:5173/dashboard';
+        res.redirect(redirectUrl);
     } catch (err) {
         next(err);
     }

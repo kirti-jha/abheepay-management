@@ -1,10 +1,8 @@
-const path = require('path');
 require('./config/env');
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
-const passport = require('passport');
 const prisma = require('./config/db');
+const authMiddleware = require('./middleware/auth');
 const upload = require('./middleware/upload');
 
 const app = express();
@@ -20,17 +18,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(upload.uploadDir));
-
-app.use(session({
-    secret: process.env.SESSION_SECRET || 'secret',
-    resave: false,
-    saveUninitialized: true,
-}));
-
-// Initialize Passport
-app.use(passport.initialize());
-app.use(passport.session());
-require('./config/passport');
+app.use(authMiddleware);
 
 // Test DB connection
 prisma.$connect()
