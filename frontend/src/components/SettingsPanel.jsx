@@ -27,7 +27,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
   const fetchPasswordRequests = async () => {
     setLoadingRequests(true);
     try {
-      const res = await axios.get('http://localhost:5000/auth/password-requests', { withCredentials: true });
+      const res = await axios.get('/auth/password-requests', { withCredentials: true });
       setRequests(res.data);
     } catch (err) {
       console.error(err);
@@ -40,7 +40,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
     e.preventDefault();
     setChangingPass(true);
     try {
-      const res = await axios.put('http://localhost:5000/auth/change-password', passForm, { withCredentials: true });
+      const res = await axios.put('/auth/change-password', passForm, { withCredentials: true });
       alert('Password changed successfully!');
       setPassForm({ currentPassword: '', newPassword: '' });
     } catch (err) {
@@ -55,7 +55,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
     e.preventDefault();
     setRequestingPass(true);
     try {
-      await axios.post('http://localhost:5000/auth/password-request', { reason: reqReason }, { withCredentials: true });
+      await axios.post('/auth/password-request', { reason: reqReason }, { withCredentials: true });
       alert('Password change request submitted to Admin/Manager successfully!');
       setReqReason('');
     } catch (err) {
@@ -74,7 +74,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/auth/password-requests/${id}`, { status, newPassword }, { withCredentials: true });
+      await axios.put(`/auth/password-requests/${id}`, { status, newPassword }, { withCredentials: true });
       alert(`Request ${status.toLowerCase()} successfully! ${newPassword ? `User password set to: ${newPassword}` : ''}`);
       fetchPasswordRequests();
     } catch (err) {

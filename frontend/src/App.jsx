@@ -8,13 +8,16 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Navbar from './components/Navbar';
 
+// Set base URL dynamically: localhost for dev, relative (Vercel same-domain) for production
+axios.defaults.baseURL = import.meta.env.DEV ? 'http://localhost:5000' : '';
+
 function App() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     // Check if user is logged in
-    axios.get('http://localhost:5000/auth/current_user', { withCredentials: true })
+    axios.get('/auth/current_user', { withCredentials: true })
       .then(res => {
         if (res.data) {
           dispatch(setUser(res.data));

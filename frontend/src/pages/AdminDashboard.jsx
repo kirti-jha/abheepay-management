@@ -32,7 +32,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
     e.preventDefault();
     setLoadingUser(true);
     try {
-      await axios.post('http://localhost:5000/auth/create-developer', {
+      await axios.post('/auth/create-developer', {
         ...userForm
       }, { withCredentials: true });
       alert(`Successfully onboarded new ${userForm.role}! Login credentials have been dispatched.`);
@@ -49,11 +49,11 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
   const fetchSystemData = async () => {
     try {
       const [projRes, repRes, userRes, taskRes, portRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/projects', { withCredentials: true }),
-        axios.get('http://localhost:5000/api/reports', { withCredentials: true }),
-        axios.get('http://localhost:5000/auth/users', { withCredentials: true }),
-        axios.get('http://localhost:5000/api/tasks', { withCredentials: true }),
-        axios.get('http://localhost:5000/api/portfolio', { withCredentials: true })
+        axios.get('/api/projects', { withCredentials: true }),
+        axios.get('/api/reports', { withCredentials: true }),
+        axios.get('/auth/users', { withCredentials: true }),
+        axios.get('/api/tasks', { withCredentials: true }),
+        axios.get('/api/portfolio', { withCredentials: true })
       ]);
       setProjects(projRes.data);
       setReports(repRes.data);
@@ -68,7 +68,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
   const handleCreateProject = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/projects', projectForm, { withCredentials: true });
+      await axios.post('/api/projects', projectForm, { withCredentials: true });
       alert('Project created successfully!');
       setProjectForm({ title: '', description: '', managerId: '', developerIds: [] });
       fetchSystemData();

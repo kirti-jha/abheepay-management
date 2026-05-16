@@ -41,7 +41,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/projects', { withCredentials: true });
+      const res = await axios.get('/api/projects', { withCredentials: true });
       const myProjects = res.data.filter(p => p.managerId === (user._id || user.id));
       setProjects(myProjects);
     } catch (err) {
@@ -51,7 +51,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchReports = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/reports', { withCredentials: true });
+      const res = await axios.get('/api/reports', { withCredentials: true });
       setReports(res.data);
     } catch (err) {
       console.error(err);
@@ -60,7 +60,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchDevelopers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/auth/users', { withCredentials: true });
+      const res = await axios.get('/auth/users', { withCredentials: true });
       const devs = res.data.filter(u => u.role === 'Developer');
       setDevelopers(devs);
     } catch (err) {
@@ -70,7 +70,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/tasks', { withCredentials: true });
+      const res = await axios.get('/api/tasks', { withCredentials: true });
       const myTasks = res.data.filter(t => t.createdById === (user._id || user.id));
       setTasks(myTasks);
     } catch (err) {
@@ -80,7 +80,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchPortfolios = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/portfolio', { withCredentials: true });
+      const res = await axios.get('/api/portfolio', { withCredentials: true });
       setPortfolios(res.data);
     } catch (err) {
       console.error(err);
@@ -90,7 +90,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   const handleCreateProject = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/projects', {
+      await axios.post('/api/projects', {
         ...projectForm,
         managerId: user._id || user.id
       }, { withCredentials: true });
@@ -115,7 +115,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   const handleCreateTask = async (e, projectId) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/tasks', {
+      await axios.post('/api/tasks', {
         ...taskForm,
         projectId,
         createdById: user._id || user.id,
@@ -134,7 +134,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
   const handleAddFigmaLink = async (e, projectId) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/api/projects/${projectId}/figma-link`, { link: figmaLink }, { withCredentials: true });
+      await axios.post(`/api/projects/${projectId}/figma-link`, { link: figmaLink }, { withCredentials: true });
       alert('Figma link added successfully!');
       setFigmaLink('');
       fetchProjects();
@@ -154,7 +154,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
     }
 
     try {
-      await axios.post(`http://localhost:5000/api/projects/${projectId}/upload`, formData, {
+      await axios.post(`/api/projects/${projectId}/upload`, formData, {
         withCredentials: true,
         headers: { 'Content-Type': 'multipart/form-data' }
       });
@@ -170,7 +170,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
     e.preventDefault();
     setLoadingDev(true);
     try {
-      await axios.post('http://localhost:5000/auth/create-developer', {
+      await axios.post('/auth/create-developer', {
         ...devForm,
         role: 'Developer'
       }, { withCredentials: true });

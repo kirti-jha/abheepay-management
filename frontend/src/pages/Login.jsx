@@ -16,7 +16,7 @@ const Login = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/auth/login', { email, password }, { withCredentials: true });
+      const res = await axios.post('/auth/login', { email, password }, { withCredentials: true });
       dispatch(setUser(res.data));
       window.location.href = '/dashboard';
     } catch (err) {
@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   const handleDemoLogin = (role) => {
-    window.location.href = `http://localhost:5000/auth/demo/${role}`;
+    window.location.href = import.meta.env.DEV ? `http://localhost:5000/auth/demo/${role}` : `/auth/demo/${role}`;
   };
 
   return (

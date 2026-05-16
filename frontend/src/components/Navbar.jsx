@@ -36,15 +36,15 @@ const Navbar = () => {
         const userId = user._id || user.id;
 
         // Fetch Tasks
-        const taskRes = await axios.get('http://localhost:5000/api/tasks', { withCredentials: true }).catch(() => ({ data: [] }));
+        const taskRes = await axios.get('/api/tasks', { withCredentials: true }).catch(() => ({ data: [] }));
         const tasks = taskRes.data || [];
 
         // Fetch Projects
-        const projRes = await axios.get('http://localhost:5000/api/projects', { withCredentials: true }).catch(() => ({ data: [] }));
+        const projRes = await axios.get('/api/projects', { withCredentials: true }).catch(() => ({ data: [] }));
         const projects = projRes.data || [];
 
         // Fetch Reports
-        const repRes = await axios.get('http://localhost:5000/api/reports', { withCredentials: true }).catch(() => ({ data: [] }));
+        const repRes = await axios.get('/api/reports', { withCredentials: true }).catch(() => ({ data: [] }));
         const reports = repRes.data || [];
 
         if (user.role === 'Developer') {
@@ -339,7 +339,7 @@ const Navbar = () => {
               </div>
 
               <a
-                href="http://localhost:5000/auth/logout"
+                href={import.meta.env.DEV ? 'http://localhost:5000/auth/logout' : '/auth/logout'}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 shadow-xs hover:shadow-sm ${
                   isDark 
                     ? 'text-red-400 bg-red-950/40 hover:bg-red-950/70 border border-red-900/50 hover:border-red-800' 

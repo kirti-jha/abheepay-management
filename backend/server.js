@@ -10,7 +10,10 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: function(origin, callback) {
+        // allow requests with no origin (like mobile apps or curl requests) or any origin
+        callback(null, true);
+    },
     credentials: true
 }));
 app.use(express.json());
@@ -42,4 +45,7 @@ app.use('/api/credentials', require('./routes/credential'));
 app.use('/api/portfolio', require('./routes/portfolio'));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+module.exports = app;

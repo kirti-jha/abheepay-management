@@ -44,7 +44,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/tasks', { withCredentials: true });
+      const res = await axios.get('/api/tasks', { withCredentials: true });
       const myTasks = res.data.filter(t => t.assignedToId === (user._id || user.id));
       setTasks(myTasks);
     } catch (err) {
@@ -54,7 +54,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/projects', { withCredentials: true });
+      const res = await axios.get('/api/projects', { withCredentials: true });
       const myProjects = res.data.filter(p => p.members?.some(m => m.userId === (user._id || user.id)));
       setProjects(myProjects);
     } catch (err) {
@@ -64,7 +64,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchReports = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/reports', { withCredentials: true });
+      const res = await axios.get('/api/reports', { withCredentials: true });
       const myReports = res.data.filter(r => r.developerId === (user._id || user.id));
       setReports(myReports);
     } catch (err) {
@@ -74,7 +74,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
 
   const fetchPortfolios = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/portfolio?developerId=${user._id || user.id}`, { withCredentials: true });
+      const res = await axios.get(`/api/portfolio?developerId=${user._id || user.id}`, { withCredentials: true });
       setPortfolios(res.data);
     } catch (err) {
       console.error(err);
@@ -101,7 +101,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
 
   const handleStatusChange = async (taskId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/tasks/${taskId}`, { status: newStatus }, { withCredentials: true });
+      await axios.put(`/api/tasks/${taskId}`, { status: newStatus }, { withCredentials: true });
       fetchTasks();
     } catch (err) {
       console.error(err);
@@ -113,7 +113,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
     const calculatedHours = calculateHours(reportForm.inTime, reportForm.outTime);
 
     try {
-      await axios.post('http://localhost:5000/api/reports', {
+      await axios.post('/api/reports', {
         ...reportForm,
         hoursLogged: calculatedHours,
         developerId: user._id || user.id
@@ -139,7 +139,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
     e.preventDefault();
     setLoadingPortfolio(true);
     try {
-      await axios.post('http://localhost:5000/api/portfolio', {
+      await axios.post('/api/portfolio', {
         ...portfolioForm,
         developerId: user._id || user.id
       }, { withCredentials: true });
@@ -157,7 +157,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
   const handleDeletePortfolio = async (id) => {
     if (!confirm('Are you sure you want to delete this project from your portfolio?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/portfolio/${id}`, { withCredentials: true });
+      await axios.delete(`/api/portfolio/${id}`, { withCredentials: true });
       fetchPortfolios();
     } catch (err) {
       console.error(err);

@@ -25,7 +25,7 @@ const CredentialVault = ({ currentTheme }) => {
   const fetchCredentials = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:5000/api/credentials?userId=${user._id || user.id}`, { withCredentials: true });
+      const res = await axios.get(`/api/credentials?userId=${user._id || user.id}`, { withCredentials: true });
       setCredentials(res.data);
     } catch (err) {
       console.error(err);
@@ -37,7 +37,7 @@ const CredentialVault = ({ currentTheme }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/credentials', { ...form, userId: user._id || user.id }, { withCredentials: true });
+      await axios.post('/api/credentials', { ...form, userId: user._id || user.id }, { withCredentials: true });
       setForm({ siteName: '', url: '', username: '', password: '', notes: '' });
       setShowForm(false);
       fetchCredentials();
@@ -49,7 +49,7 @@ const CredentialVault = ({ currentTheme }) => {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this credential?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/credentials/${id}`, { withCredentials: true });
+      await axios.delete(`/api/credentials/${id}`, { withCredentials: true });
       fetchCredentials();
     } catch (err) {
       console.error(err);
