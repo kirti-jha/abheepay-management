@@ -36,7 +36,10 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
         ...userForm
       }, { withCredentials: true });
       const createdUser = res.data;
-      alert(`Successfully onboarded new ${userForm.role}.\n\nName: ${createdUser.name}\nEmail: ${createdUser.email}\nTemporary password: ${userForm.password}\n\nEmail sending is not configured yet, so share these credentials manually.`);
+      const mailNote = createdUser.emailSent
+        ? 'Credentials email sent successfully.'
+        : `Credentials email was not sent${createdUser.emailError ? `: ${createdUser.emailError}` : '.'}\nShare these credentials manually.`;
+      alert(`Successfully onboarded new ${userForm.role}.\n\nName: ${createdUser.name}\nEmail: ${createdUser.email}\nTemporary password: ${userForm.password}\n\n${mailNote}`);
       setUserForm({ name: '', email: '', password: '', role: 'Admin' });
       fetchSystemData();
     } catch (err) {
@@ -672,7 +675,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                   Onboard System User
                 </h2>
                 <p className={`text-xs font-medium mt-1 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>
-                  Instantly provision Administrators, Managers, or Developers, then share the generated credentials manually.
+                  Instantly provision Administrators, Managers, or Developers. Credentials will be emailed if SMTP is configured.
                 </p>
               </div>
 
@@ -741,7 +744,7 @@ const AdminDashboard = ({ currentTheme, onThemeChange }) => {
                       onChange={e => setUserForm({...userForm, password: e.target.value})}
                     />
                   </div>
-                  <p className={`text-[11px] mt-1.5 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This temporary password is shown after creation. Email sending is not configured yet.</p>
+                  <p className={`text-[11px] mt-1.5 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This temporary password is shown after creation. Email works only when SMTP settings are configured.</p>
                 </div>
 
                 <button

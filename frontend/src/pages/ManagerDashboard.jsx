@@ -175,7 +175,10 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
         role: 'Developer'
       }, { withCredentials: true });
       const createdUser = res.data;
-      alert(`Developer added successfully.\n\nName: ${createdUser.name}\nEmail: ${createdUser.email}\nTemporary password: ${devForm.password}\n\nEmail sending is not configured yet, so share these credentials manually.`);
+      const mailNote = createdUser.emailSent
+        ? 'Credentials email sent successfully.'
+        : `Credentials email was not sent${createdUser.emailError ? `: ${createdUser.emailError}` : '.'}\nShare these credentials manually.`;
+      alert(`Developer added successfully.\n\nName: ${createdUser.name}\nEmail: ${createdUser.email}\nTemporary password: ${devForm.password}\n\n${mailNote}`);
       setDevForm({ name: '', email: '', password: '' });
       fetchDevelopers();
     } catch (err) {
@@ -772,7 +775,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                 <FiPlus className={isDark ? 'text-[#00D2FF]' : 'text-purple-600'} />
                 Onboard New Developer
               </h2>
-              <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>Add a developer to your team and share the generated credentials manually.</p>
+              <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>Add a developer to your team. Credentials will be emailed if SMTP is configured.</p>
 
               <form onSubmit={handleAddDeveloper} className="space-y-4">
                 <div>
@@ -824,7 +827,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                       onChange={e => setDevForm({...devForm, password: e.target.value})}
                     />
                   </div>
-                  <p className={`text-[10px] mt-1 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This temporary password is shown after creation. Email sending is not configured yet.</p>
+                  <p className={`text-[10px] mt-1 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>This temporary password is shown after creation. Email works only when SMTP settings are configured.</p>
                 </div>
 
                 <button

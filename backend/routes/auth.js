@@ -1,6 +1,7 @@
 const express = require('express');
 const prisma = require('../config/db');
 const { clearAuthCookie, setAuthCookie } = require('../config/auth');
+const { sendOnboardingEmail } = require('../config/mailer');
 const router = express.Router();
 
 // Email & Password Login Route
@@ -46,7 +47,22 @@ router.post('/create-developer', async (req, res) => {
             }
         });
 
-        res.status(201).json(user);
+        let emailSent = false;
+        let emailError = null;
+
+        try {
+            const emailResult = await sendOnboardingEmail({ name, email, password, role: role || 'Developer' });
+            emailSent = emailResult.sent;
+            emailError = emailResult.reason || null;
+        } catch (mailError) {
+            emailError = mailError.message;
+        }
+
+        res.status(201).json({
+            ...user,
+            emailSent,
+            emailError
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
