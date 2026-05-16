@@ -97,7 +97,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
         <p className={`text-sm mt-1 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>Manage your security credentials, request administrative password resets, and customize your dashboard appearance.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
         {/* Change Own Password */}
         <div className={`rounded-3xl p-6 sm:p-8 shadow-md border space-y-6 ${
           isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
@@ -167,7 +167,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {themes.map(t => {
               const Icon = t.icon;
               const active = currentTheme === t.id;
@@ -228,10 +228,10 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
               <button
                 type="submit"
                 disabled={requestingPass}
-                className={`flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-md text-xs font-bold transition-all transform hover:-translate-y-0.5 disabled:opacity-50 ${
-                  isDark ? 'bg-[#00D2FF] text-slate-950 hover:bg-[#33d4ff] shadow-cyan-500/20' : 'text-white bg-amber-600 hover:bg-amber-700 shadow-amber-500/20'
-                }`}
-              >
+              className={`w-full sm:w-auto flex justify-center items-center gap-2 py-3 px-6 border border-transparent rounded-xl shadow-md text-xs font-bold transition-all transform hover:-translate-y-0.5 disabled:opacity-50 ${
+                isDark ? 'bg-[#00D2FF] text-slate-950 hover:bg-[#33d4ff] shadow-cyan-500/20' : 'text-white bg-amber-600 hover:bg-amber-700 shadow-amber-500/20'
+              }`}
+            >
                 <FiKey /> {requestingPass ? 'Submitting...' : 'Submit Reset Request'}
               </button>
             </form>
@@ -243,7 +243,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
           <div className={`rounded-3xl p-6 sm:p-8 shadow-md border space-y-6 lg:col-span-2 ${
             isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
           }`}>
-            <div className={`flex justify-between items-center border-b pb-4 ${isDark ? 'border-[#222F4A]' : 'border-gray-100'}`}>
+            <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4 ${isDark ? 'border-[#222F4A]' : 'border-gray-100'}`}>
               <div className="flex items-center space-x-3">
                 <div className={`p-3 rounded-2xl text-xl ${isDark ? 'bg-[#1E2D4A] text-[#00D2FF]' : 'bg-purple-50 text-purple-600'}`}>
                   <FiShield />
@@ -290,7 +290,7 @@ const SettingsPanel = ({ currentTheme, onThemeChange }) => {
                   </div>
 
                   {req.status === 'Pending' && (
-                    <div className={`flex items-center gap-2 w-full sm:w-auto justify-end pt-2 sm:pt-0 border-t sm:border-t-0 ${isDark ? 'border-[#2B3C5F]' : 'border-gray-200/60'}`}>
+                    <div className={`flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto justify-end pt-2 sm:pt-0 border-t sm:border-t-0 ${isDark ? 'border-[#2B3C5F]' : 'border-gray-200/60'}`}>
                       <button
                         onClick={() => handleHandleRequest(req.id, 'Approved')}
                         className={`flex items-center gap-1 px-4 py-2 font-bold text-xs rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 ${

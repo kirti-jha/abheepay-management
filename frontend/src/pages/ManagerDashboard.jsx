@@ -509,7 +509,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
               {/* Project Management Panel */}
               <div className="space-y-6">
                 {selectedProject ? (
-                  <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 sticky top-24 ${
+                  <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 xl:sticky xl:top-24 ${
                     isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
                   }`}>
                     <div className={`border-b pb-4 ${isDark ? 'border-[#222F4A]' : 'border-gray-100'}`}>
@@ -642,7 +642,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
                     </div>
                   </div>
                 ) : (
-                  <div className={`rounded-3xl shadow-md border p-8 text-center sticky top-24 ${
+                  <div className={`rounded-3xl shadow-md border p-8 text-center xl:sticky xl:top-24 ${
                     isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
                   }`}>
                     <FiBriefcase className={`mx-auto text-4xl mb-3 ${isDark ? 'text-slate-600' : 'text-gray-300'}`} />
@@ -774,7 +774,7 @@ const ManagerDashboard = ({ currentTheme, onThemeChange }) => {
         {activeTab === 'developers' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Add Developer Form */}
-            <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 sticky top-24 ${
+            <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 xl:sticky xl:top-24 ${
               isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
             }`}>
               <h2 className={`text-xl font-bold flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>

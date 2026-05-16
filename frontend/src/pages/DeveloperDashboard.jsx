@@ -505,7 +505,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
         {activeTab === 'reports' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Submit Report Form */}
-            <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 sticky top-24 ${
+            <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 xl:sticky xl:top-24 ${
               isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
             }`}>
               <h2 className={`text-xl font-bold flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -716,7 +716,7 @@ const DeveloperDashboard = ({ currentTheme, onThemeChange }) => {
         {activeTab === 'portfolio' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Add Portfolio Form */}
-            <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 sticky top-24 ${
+            <div className={`rounded-3xl shadow-md border p-6 sm:p-8 space-y-6 xl:sticky xl:top-24 ${
               isDark ? 'bg-[#131C2E] border-[#222F4A]' : 'bg-white border-gray-100'
             }`}>
               <h2 className={`text-xl font-bold flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>

@@ -90,7 +90,7 @@ const CredentialVault = ({ currentTheme }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto justify-end">
           <div className="relative flex-1 sm:flex-initial">
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
@@ -106,7 +106,7 @@ const CredentialVault = ({ currentTheme }) => {
 
           <button
             onClick={() => setShowForm(!showForm)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md transform hover:-translate-y-0.5 ${
+            className={`w-full sm:w-auto justify-center flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md transform hover:-translate-y-0.5 ${
               isDark ? 'bg-[#00D2FF] text-slate-950 hover:bg-[#33d4ff] shadow-cyan-500/20' : 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 shadow-purple-500/20'
             }`}
           >
@@ -261,7 +261,7 @@ const CredentialVault = ({ currentTheme }) => {
                   isDark ? 'bg-[#0B101B] border-[#222F4A]' : 'bg-white border-gray-100'
                 }`}>
                   {/* Username */}
-                  <div className="flex items-center justify-between gap-2 text-xs">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs">
                     <span className={`font-bold uppercase tracking-wider flex-shrink-0 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>User</span>
                     <span className={`font-mono font-bold truncate ${isDark ? 'text-slate-200' : 'text-gray-800'}`}>{cred.username}</span>
                     <button
@@ -276,7 +276,7 @@ const CredentialVault = ({ currentTheme }) => {
                   </div>
 
                   {/* Password */}
-                  <div className={`flex items-center justify-between gap-2 text-xs pt-2 border-t ${isDark ? 'border-[#222F4A]' : 'border-gray-100'}`}>
+                  <div className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs pt-2 border-t ${isDark ? 'border-[#222F4A]' : 'border-gray-100'}`}>
                     <span className={`font-bold uppercase tracking-wider flex-shrink-0 ${isDark ? 'text-slate-500' : 'text-gray-400'}`}>Pass</span>
                     <span className={`font-mono font-bold truncate ${isDark ? 'text-slate-200' : 'text-gray-800'}`}>
                       {visiblePasswords[cred.id || cred._id] ? cred.password : '••••••••••••'}
