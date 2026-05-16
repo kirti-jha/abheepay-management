@@ -236,6 +236,13 @@ const CredentialVault = ({ currentTheme }) => {
                           {cred.url} <FiExternalLink className="text-xs flex-shrink-0" />
                         </a>
                       )}
+                      {cred.user && cred.user.id !== (user._id || user.id) && (
+                        <div className={`text-[10px] font-bold mt-1.5 px-2.5 py-0.5 rounded-lg inline-flex items-center gap-1 border shadow-xs ${
+                          isDark ? 'bg-[#131C2E] text-[#00D2FF] border-[#222F4A]' : 'bg-purple-50 text-purple-700 border-purple-100'
+                        }`}>
+                          👤 {cred.user.name} ({cred.user.role})
+                        </div>
+                      )}
                     </div>
                   </div>
 
