@@ -1,6 +1,8 @@
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
+require('./env');
+const { PrismaNeon } = require('@prisma/adapter-neon');
 const { PrismaClient } = require('@prisma/client');
+const { neonConfig } = require('@neondatabase/serverless');
+const ws = require('ws');
 
 let connectionString = process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_OJ0vwIr5fxke@ep-nameless-dew-ap3ih32n-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require';
 if (!connectionString) {
@@ -15,12 +17,9 @@ if (!connectionString.includes('sslmode=require')) {
 
 process.env.DATABASE_URL = connectionString;
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: connectionString
-    }
-  }
-});
+neonConfig.webSocketConstructor = ws;
+
+const adapter = new PrismaNeon({ connectionString });
+const prisma = new PrismaClient({ adapter });
 
 module.exports = prisma;
